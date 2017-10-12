@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Shoes Api</title>
+  <link rel="stylesheet" href="shoes_api.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <ul>
+    <li><a onclick="homeButton()" type="button" name="button" class="btn">Home</a></li>
+    <li><a onclick="myFunction()" type="button" name="button">Add Stock</a></li>
+    <li class="search">
+      <a href="javascript:void(0)" class="dropbtn">Search</a>
+      <div class="dropdown-content">
+        <input type="text" name="" placeholder="Size">
+        <input type="text" name="" placeholder="Brand">
+      </div>
+    </li>
+  </ul>
+  <br>
+  <h1>Sneaker Town</h1>
+
+  <div id="addStockDiv">
+    <input type="text" id="brand" name="brand" placeholder="Brand">
+    <input type="text" id="color" name="color" placeholder="Color">
+    <input type="text" id="size" name="size" placeholder="Size">
+    <input type="text" id="in_Stock" name="in_Stock" placeholder="Quantity">
+    <input type="text" id="price" name="price" placeholder="Price">
+    <br>
+    <button class="addStockBtn" type="button" name="button">Submit</button>
+  </div>
+  <br>
+
+  <script id="myTemplate" type="text/handlebars-x">
+    <h2>Our Stock</h2>
+    <table>
+      <tr>
+        <th>brand</th>
+        <th>color</th>
+        <th>size</th>
+        <th>in_Stock</th>
+        <th>price</th>
+      </tr>
+      {{#each data}}
+      <tr>
+        <td>{{brand}}</td>
+        <td>{{color}}</td>
+        <td>{{size}}</td>
+        <td>{{in_Stock}}</td>
+        <td>R{{price}}</td>
+      </tr>
+      {{/each}}
+    </table>
+  </script>
+  <div class="outPut">
+
+  </div>
+
+  <script src="shoes_api.js" charset="utf-8"></script>
+</body>
+
+</html>

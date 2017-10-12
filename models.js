@@ -8,6 +8,6 @@ exports.storedshoes = mongoose.model('storedshoes', {
   brand: String,
   color: String,
   size: Number,
-  quantity: Number,
+  in_Stock: Number,
   price: Number
 });
