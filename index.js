@@ -15,19 +15,13 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
-// app.use(function(req, res, next) {
-//   res.header('Access-Control-Allow-Origin', "*");
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-//   res.header('Access-Control-Allow-Headers', '"Origin, X-Requested-With, Content-Type, Accept"');
-//   next();
-// });
-
 app.get("/", function(req, res) {
   res.render('index', {})
 })
 app.post('/api/shoes', function(req, res) {
   var shoeData = req.body
   models.storedshoes.find({}, function(err, shoes) {
+    console.log(shoes);
     if (err) {
       return err
     } else {
@@ -126,7 +120,6 @@ app.post('/api/shoes/sold/:id', function(req, res) {
     }
   })
 })
-
 
 var port = process.env.PORT || 3009
 

@@ -1,4 +1,6 @@
-var shoes = [];
+var modal = document.getElementById('myModal');
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
 
 $(document).ready(function() {
 
@@ -6,8 +8,7 @@ $(document).ready(function() {
   var combineTemp = Handlebars.compile(myTableTemplate);
   var outPut = document.querySelector('.outPut')
 
-
-  function showShoes(){
+  function showShoes() {
 
     $.ajax({
       type: "GET",
@@ -22,46 +23,71 @@ $(document).ready(function() {
     });
 
   }
-
   showShoes();
 
+  function addStock() {
 
-  $('.addStockBtn').on('click', function() {
+    $('.addStockBtn').on('click', function() {
 
-    var enteredShoe = {
-      brand: document.getElementById('brand').value,
-      color: document.getElementById('color').value,
-      size: document.getElementById('size').value,
-      in_Stock: document.getElementById('in_Stock').value,
-      price: document.getElementById('price').value
-    }
+      var enteredShoe = {
+        brand: document.getElementById('brand').value,
+        color: document.getElementById('color').value,
+        size: document.getElementById('size').value,
+        in_Stock: document.getElementById('in_Stock').value,
+        price: document.getElementById('price').value
+      }
+      $.ajax({
+        type: "POST",
+        url: "/api/shoes",
+        data: enteredShoe,
+        success: function(newShoe) {
+          if (newShoe) {
+            showShoes();
+          }
+        }
+      });
 
+      document.getElementById('brand').value = ""
+      document.getElementById('color').value = ""
+      document.getElementById('size').value = ""
+      document.getElementById('in_Stock').value = ""
+      document.getElementById('price').value = ""
+    })
+  }
+  addStock();
 
+function sellShoes() {
+  // console.log(btn);
+  $('.outPut').on('click', function(e) {
+    var id = e.target.value;
+    console.log(id.value);
     $.ajax({
       type: "POST",
-      url: "/api/shoes",
-      data: enteredShoe,
-      success: function(newShoe) {
-        console.log("mmm");
-        if (newShoe) {
-          showShoes();
-          // shoes.push(newShoe)
-          // outPut.innerHTML = combineTemp({
-          //   data: shoes
-          // })
-        }
+      url: "/api/shoes/sold/" + id,
+
+      success: function(boughtShoe) {
+        console.log(boughtShoe, " s");
       }
     });
+  });
+};
+sellShoes();
 
-    document.getElementById('brand').value = ""
-    document.getElementById('color').value = ""
-    document.getElementById('size').value = ""
-    document.getElementById('in_Stock').value = ""
-    document.getElementById('price').value = ""
+function sizeFilter() {
+  $('.size').keyup(function() {
+  var sizeValue = document.querySelector(".size").value;
+  console.log("-------------");
+  $.ajax({
+    type: "GET",
+    url: "/api/shoes/size/" + sizeValue,
 
+    success: function (selectedShoe) {
+      console.log(selectedShoe);
+    }
   })
-
-
+})
+}
+sizeFilter();
 });
 
 function homeButton() {
@@ -78,4 +104,14 @@ function myFunction() {
     addStock.style.display = "block";
   }
 }
-console.log(shoes);
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+span.onclick = function() {
+  modal.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}

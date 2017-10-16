@@ -18,16 +18,19 @@
     <li class="search">
       <a href="javascript:void(0)" class="dropbtn">Search</a>
       <div class="dropdown-content">
-        <input type="text" name="" placeholder="Size">
-        <input type="text" name="" placeholder="Brand">
+        <input class="size" type="text" name="" placeholder="Size">
+        <input class="brands" type="text" name="" placeholder="Brand">
       </div>
+    </li>
+    <li>
+<a id="myBtn">Update Stock</a>
     </li>
   </ul>
   <br>
   <h1>Sneaker Town</h1>
 
   <div id="addStockDiv">
-    <input type="text" id="brand" name="brand" placeholder="Brand">
+    <input type="text" id="brand" name="brand" placeholder="Brand" required>
     <input type="text" id="color" name="color" placeholder="Color">
     <input type="text" id="size" name="size" placeholder="Size">
     <input type="text" id="in_Stock" name="in_Stock" placeholder="Quantity">
@@ -36,6 +39,23 @@
     <button class="addStockBtn" type="button" name="button">Submit</button>
   </div>
   <br>
+  <div id="myModal" class="modal">
+
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Update Stock</h2>
+      <div id="update">
+        <input type="text" id="brand" name="brand" placeholder="Brand">
+        <input type="text" id="color" name="color" placeholder="Color">
+        <input type="text" id="size" name="size" placeholder="Size">
+        <input type="text" id="in_Stock" name="in_Stock" placeholder="Quantity">
+        <input type="text" id="price" name="price" placeholder="Price">
+        <br>
+        <button class="addStockBtn" type="button" name="button">Submit</button>
+      </div>
+    </div>
+
+  </div>
 
   <script id="myTemplate" type="text/handlebars-x">
     <h2>Our Stock</h2>
@@ -46,6 +66,7 @@
         <th>size</th>
         <th>in_Stock</th>
         <th>price</th>
+        <th>buy</th>
       </tr>
       {{#each data}}
       <tr>
@@ -54,6 +75,8 @@
         <td>{{size}}</td>
         <td>{{in_Stock}}</td>
         <td>R{{price}}</td>
+        <td><button class="sellShoes" value = "{{_id}}" type="button" name="button">Buy</button></td>
+
       </tr>
       {{/each}}
     </table>
