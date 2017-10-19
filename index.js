@@ -20,26 +20,41 @@ app.get("/", function(req, res) {
 })
 app.post('/api/shoes', function(req, res) {
   var shoeData = req.body
-  models.storedshoes.find({}, function(err, shoes) {
-    console.log(shoes);
-    if (err) {
-      return err
-    } else {
-      models.storedshoes.create({
-        brand: shoeData.brand,
-        color: shoeData.color,
-        size: shoeData.size,
-        in_Stock: shoeData.in_Stock,
-        price: shoeData.price
-      }, function(err, results) {
-        if (err) {
-          return err
-        } else {
-          res.send(shoes)
-        }
-      });
-    }
-  })
+  var in_Stock = shoeData.in_Stock;
+  var brand = shoeData.brand;
+  var color = shoeData.color;
+  var size = shoeData.size;
+  var price = shoeData.price;
+  models.storedshoes.findOneAndUpdate({
+      brand: brand,
+      color: color,
+      size: size,
+      price: price
+    }, {
+      $inc: {
+        in_Stock: in_Stock
+      }
+    },
+    function(err, shoes) {
+      console.log(shoes);
+      if (err) {
+        return err
+      } else if (!shoes) {
+        models.storedshoes.create({
+          brand: shoeData.brand,
+          color: shoeData.color,
+          size: shoeData.size,
+          in_Stock: shoeData.in_Stock,
+          price: shoeData.price
+        }, function(err, results) {
+          if (err) {
+            return err
+          } else {
+            res.send(shoes)
+          }
+        });
+      }
+    })
 });
 app.get('/api/shoes', function(req, res) {
   models.storedshoes.find({},
@@ -55,7 +70,10 @@ app.get('/api/shoes', function(req, res) {
 app.get('/api/shoes/brand/:brandname', function(req, res) {
   var brand = req.params.brandname
   models.storedshoes.find({
-      brand: brand
+      "brand": {
+        $regex: brand,
+        $options: "i"
+      }
     },
     function(err, brand) {
       console.log(brand);
@@ -110,12 +128,10 @@ app.post('/api/shoes/sold/:id', function(req, res) {
     // console.log(shoe.in_Stock);
     if (err) {
       return err
-    }
-  else if (shoe.in_Stock < 1) {
+    } else if (shoe.in_Stock < 1) {
       shoe.remove()
       res.send('Out of stock!!')
-    }
-  else {
+    } else {
       res.json(shoe)
     }
   })

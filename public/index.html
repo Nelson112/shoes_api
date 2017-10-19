@@ -13,17 +13,14 @@
 
 <body>
   <ul>
-    <li><a onclick="homeButton()" type="button" name="button" class="btn">Home</a></li>
-    <li><a onclick="myFunction()" type="button" name="button">Add Stock</a></li>
+    <li><a type="button" name="button" class="btn">Home</a></li>
+    <li><a onclick="myFunction()" type="button" name="button">Add or Update Stock</a></li>
     <li class="search">
       <a href="javascript:void(0)" class="dropbtn">Search</a>
       <div class="dropdown-content">
         <input class="size" type="text" name="" placeholder="Size">
-        <input class="brands" type="text" name="" placeholder="Brand">
+        <input class="brand" type="text" name="" placeholder="Brand">
       </div>
-    </li>
-    <li>
-<a id="myBtn">Update Stock</a>
     </li>
   </ul>
   <br>
@@ -39,24 +36,6 @@
     <button class="addStockBtn" type="button" name="button">Submit</button>
   </div>
   <br>
-  <div id="myModal" class="modal">
-
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Update Stock</h2>
-      <div id="update">
-        <input type="text" id="brand" name="brand" placeholder="Brand">
-        <input type="text" id="color" name="color" placeholder="Color">
-        <input type="text" id="size" name="size" placeholder="Size">
-        <input type="text" id="in_Stock" name="in_Stock" placeholder="Quantity">
-        <input type="text" id="price" name="price" placeholder="Price">
-        <br>
-        <button class="addStockBtn" type="button" name="button">Submit</button>
-      </div>
-    </div>
-
-  </div>
-
   <script id="myTemplate" type="text/handlebars-x">
     <h2>Our Stock</h2>
     <table>
