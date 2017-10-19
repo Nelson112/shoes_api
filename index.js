@@ -36,7 +36,7 @@ app.post('/api/shoes', function(req, res) {
       }
     },
     function(err, shoes) {
-  res.send(shoes)
+  // res.send(shoes)
       if (err) {
         return err
       } else if (!shoes) {
