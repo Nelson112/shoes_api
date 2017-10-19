@@ -36,7 +36,7 @@ app.post('/api/shoes', function(req, res) {
       }
     },
     function(err, shoes) {
-      console.log(shoes);
+  res.send(shoes)
       if (err) {
         return err
       } else if (!shoes) {
@@ -50,7 +50,7 @@ app.post('/api/shoes', function(req, res) {
           if (err) {
             return err
           } else {
-            res.send(shoes)
+            res.send(results)
           }
         });
       }
@@ -128,7 +128,7 @@ app.post('/api/shoes/sold/:id', function(req, res) {
     // console.log(shoe.in_Stock);
     if (err) {
       return err
-    } else if (shoe.in_Stock < 1) {
+    } else if (shoe.in_Stock < 2) {
       shoe.remove()
       res.send('Out of stock!!')
     } else {

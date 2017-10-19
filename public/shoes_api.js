@@ -38,10 +38,11 @@ $(document).ready(function() {
       type: "POST",
       url: "/api/shoes",
       data: enteredShoe,
-      success: function(newShoe) {
-        if (newShoe) {
+      success: function() {
           showShoes();
-        }
+      },
+      error: function() {
+        console.log("an error has occured");
       }
     });
     document.getElementById('brand').value = ""
