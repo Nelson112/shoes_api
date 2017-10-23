@@ -38,8 +38,10 @@ $(document).ready(function() {
       type: "POST",
       url: "/api/shoes",
       data: enteredShoe,
-      success: function() {
+      success: function(newShoe) {
+        if (newShoe) {
           showShoes();
+        }
       },
       error: function() {
         console.log("an error has occured");
@@ -67,34 +69,41 @@ $(document).ready(function() {
   });
   $('.size').keyup(function() {
     var sizeValue = document.querySelector(".size").value;
-    $.ajax({
-      type: "GET",
-      url: "/api/shoes/size/" + sizeValue,
+    if (sizeValue.length > 0) {
+      $.ajax({
+        type: "GET",
+        url: "/api/shoes/size/" + sizeValue,
 
-      success: function(selectedShoe) {
-        if (selectedShoe) {
+        success: function(selectedShoe) {
+
           document.querySelector('.outPut').innerHTML = combineTemp({
             data: selectedShoe
           })
-        } else {
-          showShoes();
         }
-      }
-    })
+      })
+    } else {
+      showShoes();
+    }
   })
   $('.brand').keyup(function() {
     var brandValue = document.querySelector(".brand").value;
     // console.log(brandValue);
-    $.ajax({
-      type: "GET",
-      url: "/api/shoes/brand/" + brandValue,
+    if (brandValue.length > 0) {
 
-      success: function(selectedShoeBrand) {
-        document.querySelector('.outPut').innerHTML = combineTemp({
-          data: selectedShoeBrand
-        })
-      }
-    })
+
+      $.ajax({
+        type: "GET",
+        url: "/api/shoes/brand/" + brandValue,
+
+        success: function(selectedShoeBrand) {
+          document.querySelector('.outPut').innerHTML = combineTemp({
+            data: selectedShoeBrand
+          })
+        }
+      })
+    } else {
+      showShoes();
+    }
   })
   $('.btn').on('click', function() {
     var addStock = document.getElementById("addStockDiv");
